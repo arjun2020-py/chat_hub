@@ -40,74 +40,83 @@ class ScreenAuth extends StatelessWidget {
               child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
                   var cubit = context.read<AuthCubit>();
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ChatImageWidget(
-                        imageUrl: cubit.isChecked
-                            ? 'assets/images/mobile.png'
-                            : 'assets/images/internet.png',
-                      ),
-                      verticalChatSizedBox(10),
-                      ChatTextWidget(
-                        text: cubit.isChecked ? 'Login' : 'Register',
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      verticalChatSizedBox(10),
-                      cubit.isChecked
-                          ? Column(
-                              children: [
-                                ChatTextFiled(
-                                  hintText: 'email',
-                                ),
-                                verticalChatSizedBox(10),
-                                ChatTextFiled(hintText: 'password'),
-                                verticalChatSizedBox(20),
-                              ],
-                            )
-                          : Column(
-                              children: [
-                                ChatTextFiled(
-                                  hintText: 'email',
-                                ),
-                                verticalChatSizedBox(10),
-                                ChatTextFiled(hintText: 'username'),
-                                verticalChatSizedBox(10),
-                                ChatTextFiled(hintText: 'password'),
-                                verticalChatSizedBox(20),
-                              ],
-                            ),
-                      ChatElevButton(
-                        bgColor: greenColor,
-                        child: ChatTextWidget(
-                          text: cubit.isChecked ? 'Login' : 'Register',
+                  return SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ChatImageWidget(
+                          imageUrl: cubit.isChecked
+                              ? 'assets/images/mobile.png'
+                              : 'assets/images/internet.png',
                         ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (context) => ScreenChat(),
-                          ));
-                        },
-                      ),
-                      verticalChatSizedBox(15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ChatTextWidget(
-                              text: cubit.isChecked
-                                  ? "Don't have an account ?"
-                                  : 'All ready have an account'),
-                          ChatTextButton(
-                            onPressed: () {
-                              cubit.isCheckAuth();
-                            },
-                            text: 'Register',
-                          )
-                        ],
-                      )
-                    ],
+                        verticalChatSizedBox(10),
+                        ChatTextWidget(
+                          text: cubit.isChecked ? 'Login' : 'Register',
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        verticalChatSizedBox(10),
+                        cubit.isChecked
+                            ? Column(
+                                children: [
+                                  ChatTextFiled(
+                                    controller: cubit.emailCtr,
+                                    hintText: 'email',
+                                  ),
+                                  verticalChatSizedBox(10),
+                                  ChatTextFiled(
+                                    controller: cubit.passwordCtr,
+                                    hintText: 'password'),
+                                  verticalChatSizedBox(20),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  ChatTextFiled(
+                                    controller: cubit.emailCtr,
+                                    hintText: 'email',
+                                  ),
+                                  verticalChatSizedBox(10),
+                                  ChatTextFiled(
+                                    controller: cubit.usernameCtr,
+                                    hintText: 'username'),
+                                  verticalChatSizedBox(10),
+                                  ChatTextFiled(
+                                    controller: cubit.passwordCtr,
+                                    hintText: 'password'),
+                                  verticalChatSizedBox(20),
+                                ],
+                              ),
+                        ChatElevButton(
+                          bgColor: greenColor,
+                          child: ChatTextWidget(
+                            text: cubit.isChecked ? 'Login' : 'Register',
+                          ),
+                          onPressed: () {
+                            cubit.isChecked
+                                ? cubit.userLogin()
+                                : cubit.userRegistrtion();
+                          },
+                        ),
+                        verticalChatSizedBox(15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ChatTextWidget(
+                                text: cubit.isChecked
+                                    ? "Don't have an account ?"
+                                    : 'All ready have an account'),
+                            ChatTextButton(
+                              onPressed: () {
+                                cubit.isCheckAuth();
+                              },
+                              text: cubit.isChecked ?  'Register':'Login',
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
