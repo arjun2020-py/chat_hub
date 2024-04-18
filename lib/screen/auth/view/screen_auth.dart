@@ -8,7 +8,7 @@ import '../../../utils/custom_widgets/custom_sized_box.dart';
 import '../../../utils/custom_widgets/custom_text.dart';
 import '../../../utils/custom_widgets/custom_text_button.dart';
 import '../../../utils/custom_widgets/custom_textfiled.dart';
-import '../../chat/screen_chat.dart';
+import '../../chat/view/screen_chat.dart';
 import '../cubit/auth_cubit.dart';
 
 class ScreenAuth extends StatelessWidget {
